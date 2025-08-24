@@ -7,13 +7,27 @@ pipeline {
         disableConcurrentBuilds()
         
     }
+    environment{
+        def appVersion = ''
+    }
    
     stages {
+        stage('read the version'){
+            steps{
+                script{
+                    def packageJson = readJSON file: 'package.json'
+                    appVersion = packageJson.version
+                    echo "application version: $appVersion"
+                }
+            }
+
+        }
         stage('Install Dependencies'){
             steps{
                 sh """
-                    echo "this is testing"
                     npm install
+                    ls -ltr
+                    echo "application version: $appVersion"
                 """    
                 
             }
