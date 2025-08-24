@@ -32,6 +32,16 @@ pipeline {
                 
             }
         }
+
+        stage('build'){
+            steps{
+                sh """
+                    zip -q -r backend-${appVersion}.zip * -x Jenkinsfile -x backend-${appVersion}.zip
+                    ls -ltr 
+                """    
+                
+            }
+        }
        
     }
         // stage('Docker build'){
